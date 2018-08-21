@@ -28,25 +28,31 @@
 ; }
 ;;;; ここまで ;;;;;
 
-(defn setup []
+(defn- bk_gray [] (q/background 180))
+(defn- setup-win [] 
   (q/frame-rate 24)
   (q/smooth)
-  (q/background 180)
+  (bk_gray))
+(defn- setup-circle []
   (q/stroke 0)
   (q/stroke-weight 5)
-  (q/fill 255 25)
+  (q/no-fill))
+
+
+(defn setup []
+  (setup-win)
+  (setup-circle)
 ;  (let [diams (h/range-incl 10 400 10)]
-  (let [diams (range 10 400 10)]
-    (q/set-state! :diam (h/seq->stream diams)
+    (q/set-state! :diam (h/seq->stream (range 10 400 10))
                   :cent-x (/ (q/width) 2)
-                  :cent-y (/ (q/height) 2))))
+                  :cent-y (/ (q/height) 2)))
 
 (defn draw []
   (let [cent-x (q/state :cent-x)
         cent-y (q/state :cent-y)
         diam   ((q/state :diam))]
     (when diam
-      (q/background 180)
+      (bk_gray)
       (q/ellipse cent-x cent-y diam diam))))
 
 (q/defsketch gen_2_3
@@ -54,5 +60,6 @@
   :setup setup
   :draw draw
   :size [500 300]
-  :keep-on-top true)
+  ;:keep-on-top true
+  )
 
