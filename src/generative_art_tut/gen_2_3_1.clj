@@ -54,7 +54,8 @@
         diam   ((q/state :diam))]
     (when diam
       (bk_gray)
-      (q/ellipse cent-x cent-y diam diam))))
+      (q/ellipse cent-x cent-y diam diam)))
+  (q/save-frame "gen.2.3.1.jpg"))
 
 (q/defsketch gen_2_3_1
   :title "Growing circle 2"
