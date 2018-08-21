@@ -37,15 +37,16 @@
   (q/stroke 0)
   (q/stroke-weight 5)
   (q/no-fill))
-
-
+(defn- half [n] (/ n 2))
+(defn- setup-state [] 
+;  (let [diams (h/range-incl 10 400 10)]
+  (q/set-state! :diam (h/seq->stream (range 10 400 10))
+                :cent-x (half (q/width))
+                :cent-y (half (q/height))))
 (defn setup []
   (setup-win)
   (setup-circle)
-;  (let [diams (h/range-incl 10 400 10)]
-    (q/set-state! :diam (h/seq->stream (range 10 400 10))
-                  :cent-x (/ (q/width) 2)
-                  :cent-y (/ (q/height) 2)))
+  (setup-state))
 
 (defn draw []
   (let [cent-x (q/state :cent-x)
