@@ -3,34 +3,45 @@
             [quil.helpers.seqs :as h]))
 
 ;;;;; Processing用のソース;;;;;
-; フレームループを利用。setup()とdraw()
-; -- 設定 --
-; int diam = 10; // 円の直径
+; int diam = 10;
 ; float centX, centY;
 ; 
-; void setup() { // 始めに呼ばれる関数
-; 	size(500,300);
-; 	frameRate(24); // 毎秒24フレーム
-; 	smooth();
-; 	background(180);
-; 	centX = width / 2;
-; 	centY = height / 2;
-; 	stroke(0);
-; 	strokeWeight(5);
-; 	fill(255, 50);
+; void setup() {
+;   size(500, 300);
+;   frameRate(24);
+;   
+;   smooth();
+;   background(180);
+;   centX = width/2;
+;   centY = height/2;
+;   strokeWeight(5);
+;   fill(255, 50);
 ; }
-; void draw() { // frameRate()で指定された数だけ呼ばれる関数
-; 	if (diam <= 400) { // 直径のサイズが小さいこと
-; 		background(180); //背景をクリア
-; 		ellipse(centX, centY, diam, diam);
-; 		diam += 10; // フレームループのたびに半径を広げる。
-; 	}
+; 
+; void draw() {
+;   if(diam <= 400) {
+;     background(180);
+;     
+;     strokeWeight(5);
+;     fill(255, 50);
+;     ellipse(centX, centY, diam, diam);
+;     
+;     strokeWeight(1);
+;     noFill();
+;     int tempdiam = diam;
+;     while(tempdiam > 10) {
+;       ellipse(centX, centY, tempdiam, tempdiam);
+;       tempdiam -= 10;
+;     }
+;     
+;     diam += 10;
+;   }
 ; }
 ;;;; ここまで ;;;;;
 
 (defn- bk_gray [] (q/background 180))
 (defn- setup-win [] 
-  (q/frame-rate 24)
+  ;(q/frame-rate 24)
   (q/smooth)
   (bk_gray))
 (defn- setup-circle []
@@ -43,6 +54,14 @@
   (q/set-state! :diam (h/seq->stream (range 10 400 10))
                 :cent-x (q/floor (half (q/width)))
                 :cent-y (q/floor (half (q/height)))))
+(defn- inner-ellipse [x y r]
+  (q/stroke-weight 1)
+  (dorun (map #(q/ellipse x y % %)  (range 10 r 10))))
+(defn- draw-out-ellipse [x y r]
+  (bk_gray)
+  (q/stroke-weight 5)
+  (q/ellipse x y r r))
+
 (defn setup []
   (setup-win)
   (setup-circle)
@@ -53,12 +72,12 @@
         cent-y (q/state :cent-y)
         diam   ((q/state :diam))]
     (when diam
-      (bk_gray)
-      (q/ellipse cent-x cent-y diam diam)))
+      (draw-out-ellipse cent-x cent-y diam)
+      (inner-ellipse cent-x cent-y diam)))
   (q/save-frame "gen.2.3.1.jpg"))
 
 (q/defsketch gen_2_3_1
-  :title "Growing circle 2"
+  :title "Growing circle and inner"
   :setup setup
   :draw draw
   :size [500 300]
