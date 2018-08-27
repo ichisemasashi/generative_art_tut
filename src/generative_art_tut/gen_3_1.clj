@@ -12,13 +12,14 @@
 ; line(20,50,480,50);
 ;;;; ここまで ;;;;;
 
-
-
-(defn setup []
-  (q/background 255)
+(defn- bk_w [] (q/background 255))
+(defn- setup-line []
   (q/stroke-weight 5)
+  (q/stroke 20 50 70))
+(defn setup []
+  (bk_w)
   (q/smooth)
-  (q/stroke 20 50 70)
+  (setup-line)
   (q/line 20 50 480 50)
   (q/save-frame "gen.3.1.jpg"))
 
