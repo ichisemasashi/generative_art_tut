@@ -18,16 +18,17 @@
 ;;;; ここまで ;;;;;
 
 (defn- bk_w [] (q/background 255))
+(defn- ln [x y] (q/line 20 50 x y))
 (defn- normal-line [x y] 
   (q/stroke 0 30)
-  (q/line 20 50 x y))
+  (ln x y))
 (defn- random-line []
   (let [x (q/random (q/width)), y (q/random (q/height))]
     (q/stroke 20 50 70)
-    (q/line 20 50 x y)))
-
+    (ln x y)))
 (defn- setup-line []
   (q/stroke-weight 5))
+
 (defn setup []
   (bk_w)
   (q/smooth)
