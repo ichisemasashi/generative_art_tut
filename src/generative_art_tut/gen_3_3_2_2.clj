@@ -1,29 +1,23 @@
-(ns generative_art_tut.gen_3_3
+(ns generative_art_tut.gen_3_3_2_2
   (:require [quil.core :as q]))
 
 ;;;;; Processing用のソース;;;;;
 ; size(500, 100);
-; background(255);
-; strokeWeight(5);
-; smooth();
-; 
-; stroke(0, 30);
-; line (20, 50, 480, 50);
-; 
-; stroke(20, 50, 70);
-; int step = 10;
+; strokeWeight(4);
+; float xstep = 1;
 ; float lastx = -999;
 ; float lasty = -999;
-; float ynoise = random(10);
-; float y;
-; for (int x=20; x<=480; x+=step) {
-;   y = 10 + noise(ynoise) * 80;
-;   if (lastx > -999) {
+; float angle = 0;
+; float y = 50;
+; for(int x=20; x<=480;x+=xstep){
+;   float rad = radians(angle);
+;   y = 50 + (sin(rad) * 40);
+;   if(lastx > -999) {
 ;     line(x, y, lastx, lasty);
 ;   }
 ;   lastx = x;
 ;   lasty = y;
-;   ynoise += 0.1;
+;   angle++;
 ; }
 ;;;; ここまで ;;;;;
 (defn- my-zip [xs ys]
@@ -42,17 +36,16 @@
   (q/line 20 50 480 50)
 
   (q/stroke 20 50 70)
-  (let [step 10
+  (let [step 1
         border-x 20
-        seed (rand 10)
         xs (range border-x (- (q/width) border-x) step)
-        ys (map #(* % 80) (rand-seq seed))
+        ys (map #(+ 50 (* 40 (q/pow (q/sin (q/radians %)) 3))) (range))
         line-args (my-zip xs ys)]
         (dorun (map #(apply q/line %) line-args)))
-  (q/save-frame "gen.3.3.jpg"))
+  (q/save-frame "gen.3.3.2.2.jpg"))
 
-(q/defsketch gen_3_3
-  :title "successing micro line with noise"
+(q/defsketch gen_3_3_2_2
+  :title "sine^3 curve"
   :setup setup
   :size [500 100]
   )
