@@ -1,18 +1,16 @@
-(ns generative_art_tut.gen_3_2_1
+(ns generative_art_tut.gen_3_2_2
   (:require [quil.core :as q]))
 
 ;;;;; Processing用のソース;;;;;
-; int step = 10;
-; float lastx = -999;
-; float lasty = -999;
+; float xstep = 10;
+; float ystep = 10;
+; float lastx = 20;
+; float lasty = 50;
 ; float y = 50;
-; int borderx = 20;
-; int bordery = 10;
-; for (int x=borderx; x<=width-borderx;x+=step) {
-;   y = bordery + random(height - 2*bordery);
-;   if(lastx > -999) {
-;     line(x, y, lastx, lasty);
-;   }
+; for (int x=20; x<= 480; x+=xstep) {
+;   ystep = random(20) - 10;
+;   y += ystep;
+;   line(x,y,lastx, lasty);
 ;   lastx = x;
 ;   lasty = y;
 ; }
@@ -32,9 +30,9 @@
         ys (repeatedly #(rand-y border-y))
         line-args (my-zip xs ys)]
         (dorun (map #(apply q/line %) line-args)))
-  (q/save-frame "gen.3.2.1.jpg"))
+  (q/save-frame "gen.3.2.2.jpg"))
 
-(q/defsketch gen_3_2_1
+(q/defsketch gen_3_2_2
   :title "successing micro line with rondom"
   :setup setup
   :size [500 100]
