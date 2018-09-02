@@ -1,4 +1,4 @@
-(ns generative_art_tut.gen_3_3_2_3
+(ns generative_art_tut.gen_3_3_2_4
   (:require [quil.core :as q]))
 
 ;;;;; Processing用のソース;;;;;
@@ -23,8 +23,7 @@
 (defn- my-zip [xs ys]
   (map #(list %1 %2 %3 %4) xs ys (rest xs) (rest ys)))
 (defn- my-rand [x]
-  (+ 50 (* 40 ( * q/noise (* 2 x))
-              (q/pow (q/sin (q/radians x)) 3))))
+  (- 1 (q/pow (rand 1) 5)))
 
 (defn setup []
   (q/background 255)
@@ -35,15 +34,15 @@
   (q/line 20 50 480 50)
 
   (q/stroke 20 50 70)
-  (let [step 1
+  (let [step 3
         border-x 20
         xs (range border-x (- (q/width) border-x) step)
-        ys (map my-rand (range))
+        ys (map #(+ 20 (* 60 (my-rand %))) (range))
         line-args (my-zip xs ys)]
         (dorun (map #(apply q/line %) line-args)))
-  (q/save-frame "gen.3.3.2.3.jpg"))
+  (q/save-frame "gen.3.3.2.4.jpg"))
 
-(q/defsketch gen_3_3_2_3
+(q/defsketch gen_3_3_2_4
   :title "sine^3 and noise curve"
   :setup setup
   :size [500 100]
