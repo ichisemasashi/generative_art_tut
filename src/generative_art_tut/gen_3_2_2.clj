@@ -17,23 +17,21 @@
 ;;;; ここまで ;;;;;
 (defn- my-zip [xs ys]
   (map #(list %1 %2 %3 %4) xs ys (rest xs) (rest ys)))
-(defn- rand-y [y]
-  (let [h (q/height)
-        seed (- h (* 2 y))]
-    (+ y (rand seed))))
+(defn- rand-seq [x]
+  (lazy-seq (cons x
+                  (rand-seq (+ x (- (rand 10) 5))))))
 
 (defn setup []
   (let [step 10
         border-x 20
-        border-y 10
         xs (range border-x (- (q/width) border-x) step)
-        ys (repeatedly #(rand-y border-y))
+        ys (rand-seq (/ (q/height) 2))
         line-args (my-zip xs ys)]
         (dorun (map #(apply q/line %) line-args)))
   (q/save-frame "gen.3.2.2.jpg"))
 
 (q/defsketch gen_3_2_2
-  :title "successing micro line with rondom"
+  :title "successing micro line with rondom but natural"
   :setup setup
   :size [500 100]
   )
