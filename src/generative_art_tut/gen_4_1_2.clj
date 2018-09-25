@@ -1,4 +1,4 @@
-(ns generative_art_tut.gen_4_1_1
+(ns generative_art_tut.gen_4_1_2
   (:require [quil.core :as q]))
 
 ;;;;; Processing用のソース;;;;;
@@ -64,9 +64,9 @@
     (circle cent-x cent-y radius)
     (q/stroke 20 50 70)
     (dorun (map #(apply q/line %) line-args)))
-  (q/save-frame "gen.4.1.1.jpg"))
+  (q/save-frame "gen.4.1.2.jpg"))
 
-(q/defsketch gen_4_1_1
+(q/defsketch gen_4_1_2
   :title "Spiral"
   :setup setup
   :size [500 300]
