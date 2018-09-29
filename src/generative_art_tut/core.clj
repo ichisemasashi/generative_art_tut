@@ -1,5 +1,5 @@
 (ns generative_art_tut.core
-  (:require [generative_art_tut.gen_4_1_1 :as g]))
+  (:require [generative_art_tut.gen_2_4_2 :as g]))
 
 (defn setup []
    (g/setup))

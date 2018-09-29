@@ -61,7 +61,7 @@
     (when diam
       (draw-out-ellipse cent-x cent-y diam)))
       ; (inner-ellipse cent-x cent-y diam)))
-  (q/save-frame "gen.2.4.2.jpg"))
+  (q/save-frame "gen.2.4.2-####.jpg"))
 
 (q/defsketch gen_2_4_2
   :title "Growing circle and inner"
