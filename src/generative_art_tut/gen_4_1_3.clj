@@ -48,7 +48,7 @@
   (spir rad radi y q/sin))
 (defn- my-zip [xs ys]
   (map #(list %1 %2 %3 %4) xs ys (rest xs) (rest ys)))
-
+(def MAX Integer/MAX_VALUE)
 (defn setup []
   (bk_gray)
   (q/stroke-weight 5)
@@ -56,19 +56,17 @@
   (let [radius 100
         cent-x (half (q/width))
         cent-y (half (q/height))
-        rad-noise (map #(* 200 (q/noise %)) (range (rand 10) 1000000 0.05))
+        rad-noise (map #(* 200 (q/noise %)) (range (rand 10) MAX 0.05))
         rads (map q/radians (range 0 (* 360 4) 5))
         radi (range 10 2000 0.5)
         radii (map #(+ %1 %2 -100) radi rad-noise)
-        ;;
-        ;;ここまでやった
-        xs (map #(spir-x %1 %2 cent-x) rads radi)
-        ys (map #(spir-y %1 %2 cent-y) rads radi)
+        xs (map #(spir-x %1 %2 cent-x) rads radii)
+        ys (map #(spir-y %1 %2 cent-y) rads radii)
         line-args (my-zip xs ys)
         ]
     (q/stroke 0 30)
     (q/no-fill)
-    (circle cent-x cent-y radius)
+    (circle cent-x cent-y (* 2 radius))
     (q/stroke 20 50 70)
     (dorun (map #(apply q/line %) line-args)))
   (q/save-frame "gen.4.1.3.jpg"))
