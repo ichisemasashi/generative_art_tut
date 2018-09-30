@@ -52,12 +52,12 @@
   (bk_gray)
   (q/stroke-weight 0.5)
   (q/smooth)
+  (let [d 360
+        radius 100
+        cent-x (half (q/width))
+        cent-y (half (q/height))]
   (dotimes [_ 100]
-    (let [d 360
-          radius 100
-          cent-x (half (q/width))
-          cent-y (half (q/height))
-          start-angle (rand d)
+    (let [start-angle (rand d)
           end-angle (+ (* 4 d) (rand (* 4 d)))
           angle-step (+ 5 (rand 3))
           rad-noise (map #(* 200 (q/noise %)) (range (rand 10) MAX 0.05))
@@ -69,7 +69,7 @@
           line-args (my-zip xs ys)
           ]
       (q/stroke (rand 20) (rand 50) (rand 70) 80)
-      (dorun (map #(apply q/line %) line-args))))
+      (dorun (map #(apply q/line %) line-args)))))
     (q/save-frame "gen.4.1.3.1.jpg"))
 (q/defsketch gen_4_1_3_1
   :title "100 of Noisy Spiral"

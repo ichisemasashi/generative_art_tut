@@ -73,12 +73,11 @@
         cent-y (half (q/height))
         noise-val (rand 10)
         rads (map q/radians (range 0 d))
-        start-angle (rand d)
         noise-vals (range noise-val MAX_FLOAT 0.1)
         rad-vars (map #(* 30 (custom-noise %)) noise-vals)
         radii (map + rad-vars (repeat radius))
-        xs (map #(spir-x %1 %2 cent-x) radii rads)
-        ys (map #(spir-y %1 %2 cent-y) radii rads)
+        xs (map #(spir-x %1 %2 cent-x) rads radii)
+        ys (map #(spir-y %1 %2 cent-y) rads radii)
         ]
     (q/stroke 0 30)
     (q/no-fill)
@@ -87,7 +86,8 @@
     (q/stroke-weight 1)
     (q/begin-shape)
     (q/fill 20 50 70 50)
-    (dorun (map q/curve-vertex xs ys)))
+    (dorun (map q/curve-vertex xs ys))
+    (q/end-shape))
   (q/save-frame "gen.4.1.4.jpg"))
 (q/defsketch gen_4_1_4
   :title "custome Noise Circle"
