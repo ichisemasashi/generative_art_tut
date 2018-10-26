@@ -2,40 +2,47 @@
   (:require [quil.core :as q]))
 
 ;;;;; Processing用のソース;;;;;
+; float angleNoise, radiusNoise;
+; float angle = -PI/2;
+; float radius;
+; float centX, centY;
+; float strokeColor = 254;
+; int strokeChange = -1;
+; 
 ; void setup() {
 ;   size(500, 300);
-;   background(255);
-;   strokeWeight(5);
 ;   smooth();
-;   
-;   float radius = 0;
-;   float radiusnoise = random(10);
-;   int centx = 250;
-;   int centy = 150;
-;   stroke(0, 30);
+;   frameRate(30);
+;   background(255);
 ;   noFill();
-;   ellipse(centx, centy, radius*2, radius*2);
 ;   
-;   stroke(20, 50, 70);
-;   strokeWeight(0.5);
-;   float x1, y1, x2, y2;
-;   int strokeColor = 255;
+;   angleNoise = random(10);
+;   radiusNoise = random(10);
+;   
+;   centX = width/2;
+;   centY = height/2;
+; }
 ; 
-;   for (float ang = 0;ang <= 360;ang += 1) {
-;     strokeColor -= 1;
-;     if (strokeColor < 0) {
-;       strokeColor = 255;
-;     }
-;     stroke(strokeColor);
-;     float rad = radians(ang);
-;     radiusnoise += 0.005;
-;     radius = (noise(radiusnoise) * 550) + 1;
-;     x1 = centx + (radius * cos(rad));
-;     y1 = centy + (radius * sin(rad));
-;     x2 = centx + (radius * cos(rad + PI));
-;     y2 = centy + (radius * sin(rad + PI));
-;     line(x1, y1, x2, y2);
-;   }
+; void draw() {
+;   radiusNoise += 0.005;
+;   radius = (noise(radiusNoise) * 550) + 1;
+;   angleNoise += 0.005;
+;   angle += (noise(radiusNoise) * 6) - 3;
+;   if(angle > 360) {angle -= 360;}
+;   if(angle < 0) {angle += 360;}
+;   
+;   float rad = radians(angle);
+;   float x1 = centX + (radius * cos(rad));
+;   float y1 = centY + (radius * sin(rad));
+;   float x2 = centX + (radius * cos(rad + PI));
+;   float y2 = centY + (radius * sin(rad + PI));
+;   
+;   strokeColor += strokeChange;
+;   if(strokeColor > 254) {strokeChange = -1;}
+;   if (strokeColor < 0) {strokeChange = 1;}
+;   stroke(strokeColor, 60);
+;   strokeWeight(1);
+;   line(x1, y1, x2, y2);
 ; }
 ;;;; ここまで ;;;;;
 (defn- bk_gray [] (q/background 255))
